@@ -1,0 +1,84 @@
+{
+  "name": "rom",
+  "version": "0.0.1",
+  "description": "ROM is a hook library like Vercel's SWR but purpose-built for Data Mutation. It also aims to introduce a more organized approach to interacting with APIs when building scalable web apps.",
+  "author": "Ifedayo Oni",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": "ifedayoprince/rom",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "test": "jest",
+    "test:dev": "jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "globals": {
+      "__DEV__": true
+    },
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ]
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^15.0.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/prop-types": "^15.7.12",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "axios": "^1.6.8",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "eslint-plugin-react-hooks": "^4.6.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-test-renderer": "^18.3.0",
+    "rollup": "^4.16.4",
+    "rollup-plugin-node-externals": "^7.1.2",
+    "rollup-plugin-sass": "^1.12.22",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "ts-jest": "^29.1.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5",
+    "zustand": "^4.5.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "swr",
+    "axios",
+    "post",
+    "request",
+    "react hooks",
+    "typescript",
+    "npm"
+  ],
+  "dependencies": {
+    "prop-types": "^15.8.1"
+  }
+}
