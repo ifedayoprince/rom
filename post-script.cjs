@@ -3,8 +3,8 @@ const readline = require("readline");
 
 
 // Hardcoded snippet content
-const snippetContent = 
-`{
+const snippetContent =
+	`{
 	"xaxi": {
 		"scope": "javascript,typescript,typescriptreact,typescriptreact-native,javascriptreact,javascriptreact-native",
 		"prefix": "xaxi",
@@ -49,46 +49,51 @@ const snippetContent =
 	}
 }`
 
-function install() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
+module.exports = function install() {
+	console.log("[xaxi] Running install script");
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	});
 
-  // Prompt user for snippet installation
-  rl.question(
-    "Would you like to install snippets to improve developer experience? (y/n): ",
-    function (answer) {
-      if (answer.toLowerCase() === "y") {
-        addSnippets();
-      } else {
-        console.log("Skipping snippet installation.");
-        rl.close();
-      }
-    }
-  );
+	// Prompt user for snippet installation
+	rl.question(
+		"Would you like to install snippets to improve developer experience? (y/n): ",
+		function (answer) {
+			if (answer.toLowerCase() === "y") {
+				addSnippets();
+			} else {
+				console.log("Skipping snippet installation.");
+				rl.close();
+			}
+		}
+	);
 
-  rl.on("close", function () {
-    process.exit(0);
-  });
+	rl.on("close", function () {
+		process.exit(0);
+	});
 }
 
 function addSnippets() {
-  // Define the path to the VSCode snippet file
-  const snippetFile = ".vscode/xaxi-snippet.code-snippets";
-  
-  // Check if the .vscode directory exists
-  if (!fs.existsSync(".vscode")) {
-    fs.mkdirSync(".vscode");
-  }
+	// Define the path to the VSCode snippet file
+	const snippetFile = ".vscode/xaxi-snippet.code-snippets";
 
-  // Write snippet content to file
-  fs.writeFileSync(snippetFile, snippetContent);
+	// Check if the .vscode directory exists
+	if (!fs.existsSync(".vscode")) {
+		fs.mkdirSync(".vscode");
+	}
 
-  console.log("VSCode snippets added successfully!");
+	// Write snippet content to file
+	fs.writeFileSync(snippetFile, snippetContent);
+
+	console.log("VSCode snippets added successfully!");
 }
 
 // Called on the command line
 if (require.main === module) {
-  install();
+	module.exports()
+    .catch(function(e) {
+      console.error("[xaxi] ERROR - Could not finish install");
+      process.exit(e);
+    });
 }
