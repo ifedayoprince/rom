@@ -90,4 +90,4 @@ function promptUser() {
 }
 
 console.log("XAXI DX Setup");
-promptUser();
+// promptUser();
