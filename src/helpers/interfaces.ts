@@ -113,6 +113,6 @@ export interface IUseXi {
 
 
 export interface XiProps {
-  self: UseXiSelf,
-  axios: AxiosInstance
+  self: UseXiSelf;
+  axios: AxiosInstance;
 }
