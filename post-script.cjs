@@ -91,9 +91,9 @@ function addSnippets() {
 
 // Called on the command line
 if (require.main === module) {
+	try {
 	module.exports()
-    .catch(function(e) {
+	} catch (e){
       console.error("[xaxi] ERROR - Could not finish install");
-      process.exit(e);
-    });
+    };
 }
