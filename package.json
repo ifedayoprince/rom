@@ -16,7 +16,7 @@
     "start": "rollup -c -w",
     "test": "jest",
     "test:dev": "jest --watch",
-    "postinstall": "node post-script.js"
+    "postinstall": "node post-script"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -68,7 +68,7 @@
   },
   "files": [
     "dist",
-    "post-script.js"
+    "post-script.cjs"
   ],
   "keywords": [
     "react",
