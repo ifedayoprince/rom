@@ -51,27 +51,32 @@ const snippetContent =
 
 module.exports = function install() {
 	console.log("[xaxi] Running install script");
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout
-	});
 
-	// Prompt user for snippet installation
-	rl.question(
-		"Would you like to install snippets to improve developer experience? (y/n): ",
-		function (answer) {
-			if (answer.toLowerCase() === "y") {
-				addSnippets();
-			} else {
-				console.log("Skipping snippet installation.");
-				rl.close();
+	return new Promise((resolve, reject) => {
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout
+		});
+
+		// Prompt user for snippet installation
+		rl.question(
+			"Would you like to install snippets to improve developer experience? (y/n): ",
+			function (answer) {
+				if (answer.toLowerCase() === "y") {
+					addSnippets();
+				} else {
+					console.log("Skipping snippet installation.");
+					rl.close();
+				}
 			}
-		}
-	);
+		);
 
-	rl.on("close", function () {
-		process.exit(0);
-	});
+		rl.on("close", function () {
+			process.exit(0);
+		});
+	}).then(function() {
+		console.info("[xaxi] Completed installation successfully.");
+	  });
 }
 
 function addSnippets() {
@@ -91,9 +96,9 @@ function addSnippets() {
 
 // Called on the command line
 if (require.main === module) {
-	try {
 	module.exports()
-	} catch (e){
+    .catch(function(e) {
       console.error("[xaxi] ERROR - Could not finish install");
-    };
+      process.exit(-1);
+    });
 }
