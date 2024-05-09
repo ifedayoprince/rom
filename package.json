@@ -15,8 +15,7 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test": "jest",
-    "test:dev": "jest --watch",
-    "postinstall": "node post-script.cjs"
+    "test:dev": "jest --watch"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -68,7 +67,7 @@
   },
   "files": [
     "dist",
-    "post-script.cjs"
+    ".vscode/xaxi-snippets.code-snippets"
   ],
   "keywords": [
     "react",
