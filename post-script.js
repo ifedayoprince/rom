@@ -1,6 +1,5 @@
-import fs from 'fs';
-import path from 'path';
-import inquirer from 'inquirer';
+const fs = require("fs-extra");
+const readline = require("readline");
 
 
 // Hardcoded snippet content
@@ -50,20 +49,46 @@ const snippetContent =
 	}
 }`
 
-// Function to add hardcoded VSCode snippet content to the project
-function addSnippets() {
-    // Define the path to the VSCode snippet file
-    const snippetFile = path.join('.vscode', 'xaxi-snippets.code-snippets');
+function install() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
-    // Check if the .vscode directory exists
-    if (!fs.existsSync('.vscode')) {
-        fs.mkdirSync('.vscode', { recursive: true });
+  // Prompt user for snippet installation
+  rl.question(
+    "Would you like to install snippets to improve developer experience? (y/n): ",
+    function (answer) {
+      if (answer.toLowerCase() === "y") {
+        addSnippets();
+      } else {
+        console.log("Skipping snippet installation.");
+        rl.close();
+      }
     }
+  );
 
-    // Write snippet content to file
-    fs.writeFileSync(snippetFile, snippetContent);
-
-    console.log('VSCode snippet for Xaxi added successfully!');
+  rl.on("close", function () {
+    process.exit(0);
+  });
 }
 
-addSnippets();
+function addSnippets() {
+  // Define the path to the VSCode snippet file
+  const snippetFile = ".vscode/xaxi-snippet.code-snippets";
+  
+  // Check if the .vscode directory exists
+  if (!fs.existsSync(".vscode")) {
+    fs.mkdirSync(".vscode");
+  }
+
+  // Write snippet content to file
+  fs.writeFileSync(snippetFile, snippetContent);
+
+  console.log("VSCode snippets added successfully!");
+}
+
+// Called on the command line
+if (require.main === module) {
+  install();
+}
