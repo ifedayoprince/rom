@@ -17,7 +17,6 @@ export default {
       strict: true,
     },
   ],
-  plugins: [sass({ insert: true }), typescript(), uglify(), nodeExternals({
-  })],
+  plugins: [sass({ insert: true }), typescript(), uglify(), nodeExternals({})],
   external: ['react', 'react-dom'],
 }
