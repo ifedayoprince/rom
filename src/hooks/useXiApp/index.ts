@@ -1,5 +1,5 @@
 import { IUseXi, UseXiSelf } from '../../helpers/interfaces';
-import axios, { Axios, AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { XiService } from '../../helpers/XiService';
 import { create } from 'zustand';
 

@@ -21,6 +21,6 @@
     "esModuleInterop": true,
     "strict": true
   },
-  "include": ["src"],
+  "include": ["src", "post-script.js"],
   "exclude": ["node_modules", "dist", "example", "rollup.config.js"]
 }
