@@ -26,7 +26,7 @@ function XiWrap(self: UseXiSelf, func: () => any) {
  * @usage ```@XiInjectable()```
  */
 export function XiInjectable() {
-  return function (target: any) {
+  return function (target: any, _: any) {
     const originalMethods = Object.getOwnPropertyNames(target.prototype).filter((method) => method !== 'constructor');
 
     originalMethods.forEach((methodName) => {
@@ -52,7 +52,7 @@ export function XiInjectable() {
  * @returns 
  */
 export function XiUnwrap() {
-  return function (target: any, propertyKey: string) {
+  return function (target: any, propertyKey: any) {
     target[`${propertyKey}_XiWrap`] = false;
   }
 }
