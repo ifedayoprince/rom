@@ -1,15 +1,22 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import axios from 'axios';
-import { useROMPage } from '../index';
+import { renderHook, act, cleanup } from '@testing-library/react-hooks';
+import { useXiApp } from '../index';
 import { TestService } from '../../../service-sample';
 
-describe('useROMPage tests', () => {
+
+describe('useXiApp tests', () => {
+
+  beforeEach(() => {
+    const { result: _ } = renderHook(() => useXiApp())
+  })
+  afterEach(() => { cleanup() })
+
+
   it('should be defined', () => {
-    expect(useROMPage).toBeDefined();
+    expect(useXiApp).toBeDefined();
   });
 
   it('renders the hook correctly and checks types', () => {
-    const { result } = renderHook(() => useROMPage(axios.create()));
+    const { result } = renderHook(() => useXiApp());
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.success).toBeFalsy();
     expect(result.current.error).toBeNull();
@@ -17,7 +24,7 @@ describe('useROMPage tests', () => {
   });
 
   it('inject a sample service and ensure it returns the correct data', () => {
-    const { result } = renderHook(() => useROMPage(axios.create()));
+    const { result } = renderHook(() => useXiApp());
 
     act(() => {
       const injectResult = result.current.inject(TestService);
@@ -33,21 +40,25 @@ describe('useROMPage tests', () => {
   })
 
   it('inject a sample service and call a sample method from the service', async () => {
-    const { result } = renderHook(() => useROMPage(axios.create()));
+    const { result } = renderHook(() => useXiApp());
 
     await act(async () => {
       const [testService] = result.current.inject(TestService);
       await (testService as TestService).getData();
     })
 
+    console.log("dsd", result.current.data);
     expect(result.current.data).toBeDefined();
+    expect(typeof result.current.data).toBe('object');
+    expect(result.current.data.length).toStrictEqual(100);
     expect(result.current.success).toBeTruthy();
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.error).toBeNull();
+
   })
 
   it('inject a sample service and call a erroneous method from the service', async () => {
-    const { result } = renderHook(() => useROMPage(axios.create()));
+    const { result } = renderHook(() => useXiApp());
 
     await act(async () => {
       const [testService] = result.current.inject(TestService);
@@ -58,5 +69,19 @@ describe('useROMPage tests', () => {
     expect(result.current.success).toBeFalsy();
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.error).toBeDefined();
+  })
+
+  it('creates two hooks and ensure data persists among them', async () => {
+    const { result: result1 } = renderHook(() => useXiApp());
+    const { result: result2 } = renderHook(() => useXiApp());
+
+    await act(async () => {
+      const [testService] = result1.current.inject(TestService);
+      await (testService as TestService).getErroneousData();
+    })
+
+    expect(result1.current.data).toStrictEqual(result2.current.data);
+    expect(result1.current.success).toStrictEqual(result2.current.success);
+    expect(result1.current.isLoading).toStrictEqual(result2.current.isLoading);
   })
 });

@@ -1,11 +1,11 @@
 {
-  "name": "rom",
+  "name": "xaxi",
   "version": "0.0.1",
-  "description": "ROM is a hook library like Vercel's SWR but purpose-built for Data Mutation. It also aims to introduce a more organized approach to interacting with APIs when building scalable web apps.",
+  "description": "Xaxi is a hook library like Vercel's SWR but purpose-built for Data Mutation. It also aims to introduce a more organized approach to interacting with APIs when building scalable web apps.",
   "author": "Ifedayo Oni",
   "license": "Apache-2.0",
   "type": "module",
-  "repository": "ifedayoprince/rom",
+  "repository": "https://github.com/ifedayoprince/xaxi.git",
   "main": "dist/index.js",
   "engines": {
     "node": ">=8",
@@ -15,7 +15,8 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test": "jest",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "postinstall": "node src/post-script.js"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -79,6 +80,9 @@
     "npm"
   ],
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "file-system": "^2.2.2",
+    "inquirer": "^9.2.20",
+    "prop-types": "^15.8.1",
+    "reflect-metadata": "^0.2.2"
   }
 }

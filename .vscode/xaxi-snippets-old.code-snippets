@@ -1,0 +1,44 @@
+{
+	"xaxi": {
+		"scope": "javascript,typescript,typescriptreact,typescriptreact-native,javascriptreact,javascriptreact-native",
+		"prefix": "xaxi",
+		"body": [
+			"import { XiService } from 'xaxi';",
+			"import { XiInjectable } from 'xaxi';",
+			"import { XiProps } from 'xaxi';",
+			"",
+			"@XiInjectable()",
+			"export class ${1:TestService} implements XiService {",
+ 			"   async getData() {",
+  			"      const res = await this.props.axios.get('${2:https://jsonplaceholder.typicode.com/todos/1}');",
+   			"      return res.data;",
+   			"   }",
+			"",
+   			"   public props: XiProps;",
+    		"   constructor(props: XiProps) { this.props = props }",
+			"}"
+		],
+		"description": "Adds a simple XiService."
+	},
+
+	"xaxi:inject": {
+		"scope": "javascript,typescript,typescriptreact,typescriptreact-native,javascriptreact,javascriptreact-native",
+		"prefix": "xaxi:inject",
+		"body": [
+			"const [${1:testService}] = inject(${2:TestService}) as ",
+			"      [${2:TestService}]"
+		],
+		"description": "Injects some XiService into the current Xaxi instance."
+	},
+
+	"xaxi:wrap": {
+		"scope": "javascript,typescript,typescriptreact,typescriptreact-native,javascriptreact,javascriptreact-native",
+		"prefix": "xaxi:wrap",
+		"body": [
+			"await wrap(async (axiosInstance) => {",
+			"    return (await axiosInstance.$0).data;",
+			"})"
+		],
+		"description": "Used to wrap actions too simple for a standalone service."
+	}
+}

@@ -1,1 +1,1 @@
-# ROM (Real-time Object Manipulator)
+# XAXI (eXtended AXIos for React)

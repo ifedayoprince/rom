@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { IUseROM, UseROMSelf } from '../../helpers/interfaces';
+import { IUseXi, UseXiSelf } from '../../helpers/interfaces';
 import axios, { AxiosInstance } from 'axios';
-import { ROMService } from '../../helpers/ROMService';
+import { XiService } from '../../helpers/XiService';
 
 
 /**
@@ -40,13 +40,13 @@ import { ROMService } from '../../helpers/ROMService';
  *    }
  */
 
-export const useROMPage = (axiosInstance?: AxiosInstance): IUseROM => {
+export const useXiPage = (axiosInstance?: AxiosInstance): IUseXi => {
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  const self: UseROMSelf = {
+  const self: UseXiSelf = {
     setIsLoading,
     setSuccess,
     setData,
@@ -56,9 +56,28 @@ export const useROMPage = (axiosInstance?: AxiosInstance): IUseROM => {
   if (!axiosInstance)
     axiosInstance = axios.create();
 
-  const inject = (...props: (new (self: UseROMSelf, axiosInstance: AxiosInstance) => ROMService)[]) => 
-      props.map(service => new service(self, axiosInstance));
+  const inject = (...props: (new (self: UseXiSelf, axiosInstance: AxiosInstance) => XiService)[]) =>
+    props.map(service => new service(self, axiosInstance));
 
+  const wrap = async (func: (axiosInstance: AxiosInstance) => Promise<any>) => {
+    self.setSuccess(false);
+    try {
+      self.setIsLoading(true);
+      self.setError(null);
+      self.setData(null);
+
+      const res = await func(axiosInstance as AxiosInstance);
+
+      self.setSuccess(true)
+      self.setIsLoading(false);
+      self.setData(res);
+      return res;
+    } catch (e: any) {
+      self.setIsLoading(false);
+      self.setError(e);
+      self.setData(null);
+    }
+  }
   return {
     isLoading,
     axios: axiosInstance,
@@ -66,6 +85,7 @@ export const useROMPage = (axiosInstance?: AxiosInstance): IUseROM => {
     inject,
     data,
     error,
+    wrap,
     self
   };
 };

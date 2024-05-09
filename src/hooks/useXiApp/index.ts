@@ -1,6 +1,6 @@
-import { IUseROM, UseROMSelf } from '../../helpers/interfaces';
-import axios, { AxiosInstance } from 'axios';
-import { ROMService } from '../../helpers/ROMService';
+import { IUseXi, UseXiSelf } from '../../helpers/interfaces';
+import axios, { Axios, AxiosInstance } from 'axios';
+import { XiService } from '../../helpers/XiService';
 import { create } from 'zustand';
 
 /**
@@ -39,22 +39,41 @@ import { create } from 'zustand';
  *    }
  */
 
-export const useROMApp = (axiosInstance?: AxiosInstance) => create<IUseROM>()(set => {
+export const useXiApp = (axiosInstance?: AxiosInstance) => create<IUseXi>()(set => {
   let instance = axios.create();
   if (axiosInstance)
     instance = axiosInstance;
 
-  const inject = (...props: (new (self: UseROMSelf, axiosInstance: AxiosInstance) => ROMService)[]) =>
+  const inject = (...props: (new (self: UseXiSelf, axiosInstance: AxiosInstance) => XiService)[]) =>
     props.map(service => new service(self, instance))
 
-  const self: UseROMSelf = {
+  const self: UseXiSelf = {
     setIsLoading: (loading) => set(_ => ({ isLoading: loading })),
     setSuccess: (success) => set(_ => ({ success })),
     setError: (error) => set(_ => ({ error })),
     setData: (data) => set(_ => ({ data }))
   }
 
-  
+  const wrap = async (func: (axiosInstance: AxiosInstance) => Promise<any>) => {
+    self.setSuccess(false);
+    try {
+      self.setIsLoading(true);
+      self.setError(null);
+      self.setData(null);
+
+      const res = await func(axiosInstance as AxiosInstance);
+
+      self.setSuccess(true)
+      self.setIsLoading(false);
+      self.setData(res);
+      return res;
+    } catch (e: any) {
+      self.setIsLoading(false);
+      self.setError(e);
+      self.setData(null);
+    }
+  }
+
   return {
     error: null,
     data: null,
@@ -62,6 +81,7 @@ export const useROMApp = (axiosInstance?: AxiosInstance) => create<IUseROM>()(se
     isLoading: false,
     success: false,
     self,
+    wrap,
     inject
   }
 })()

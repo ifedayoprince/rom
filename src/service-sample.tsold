@@ -1,11 +1,11 @@
 import { AxiosInstance } from "axios";
-import { ROMService } from "./helpers/ROMService";
-import { UseROMSelf } from "./helpers/interfaces";
+import { XiService } from "./helpers/XiService";
+import { UseXiSelf } from "./helpers/interfaces";
 
-export class TestService extends ROMService {
+export class TestService extends XiService {
   private axiosInstance: AxiosInstance;
 
-  constructor(self: UseROMSelf, axiosInstance: AxiosInstance) {
+  constructor(self: UseXiSelf, axiosInstance: AxiosInstance) {
     super(self);
     this.axiosInstance = axiosInstance;
   }
@@ -22,4 +22,8 @@ export class TestService extends ROMService {
     })
   }
 
+  async getDataDecorator() {
+    const res = await this.axiosInstance.get('http://localhost:3002/test');
+    return res.data;
+  }
 }

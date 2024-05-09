@@ -1,6 +1,6 @@
-export {UseROMSelf, IUseROM} from './helpers/interfaces';
+export { useXiApp } from './hooks/useXiApp';
+export { useXiPage } from './hooks/useXiPage';
 
-export { useROMApp } from './hooks/useROMApp';
-export { useROMPage } from './hooks/useROMPage';
+export { UseXiSelf, IUseXi } from './helpers/interfaces';
 
-export { ROMService } from './helpers/ROMService';
+export { XiService } from './helpers/XiService';
