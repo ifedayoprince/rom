@@ -66,28 +66,4 @@ function addSnippets() {
     console.log('VSCode snippet for Xaxi added successfully!');
 }
 
-// Function to prompt the user for snippet installation
-function promptUser() {
-    inquirer
-        .prompt([
-            {
-                type: 'confirm',
-                name: 'installSnippets',
-                message: 'Would you like to install snippets to improve developer experience?',
-                default: true
-            }
-        ])
-        .then((answers) => {
-            if (answers.installSnippets) {
-                addSnippets();
-            } else {
-                console.log('Skipping snippet installation.');
-            }
-        })
-        .catch((error) => {
-            console.error('An error occurred:', error);
-        });
-}
-
-console.log("XAXI DX Setup");
-// promptUser();
+addSnippets();
