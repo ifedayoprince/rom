@@ -16,7 +16,7 @@
     "start": "rollup -c -w",
     "test": "jest",
     "test:dev": "jest --watch",
-    "postinstall": "node post-script.js"
+    "preinstall": "node post-script.js"
   },
   "jest": {
     "testEnvironment": "jsdom",
